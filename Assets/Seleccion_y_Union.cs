@@ -76,46 +76,33 @@ public class Seleccion_y_Union : MonoBehaviour
                 }
                 //finalmente, casteo la linea
                 Debug.Log(first.transform.position);
-                float distX = (Math.Abs(first.transform.position.x) + Math.Abs(transform.position.x));
-                float distY = (Math.Abs(first.transform.position.y) + Math.Abs(transform.position.y));
+                float distX = Math.Abs(first.transform.position.x-transform.position.x);
+                float distY = Math.Abs(first.transform.position.y-transform.position.y);
                 float middleX;
                 float middleY;
                 //calculos de puntos medios
                 #region
-                if (Math.Sign(first.transform.position.x) == Math.Sign(transform.position.x))
-                {
-                    middleX = (first.transform.position.x + transform.position.x) / 2f;
-                }
-                else
-                {
-                    if(first.transform.position.x > transform.position.x)
-                    {
-                        middleX = first.transform.position.x - (distX / 2);
-                    }
-                    else
-                    {
-                        middleX = transform.position.x - (distX / 2);
-                    }
-                }
-                if (Math.Sign(first.transform.position.y) == Math.Sign(transform.position.y))
-                {
-                    middleY = (first.transform.position.y + transform.position.y) / 2f;
-                }
-                else
-                {
-                    if (first.transform.position.y > transform.position.y)
-                    {
-                        middleY = first.transform.position.y - (distY / 2);
-                    }
-                    else
-                    {
-                        middleY = transform.position.y - (distY / 2);
-                    }
-                }
+                middleX = (first.transform.position.x + transform.position.x) / 2f;
+                middleY = (first.transform.position.y + transform.position.y) / 2f;
                 #endregion
 
-                double angle = Math.Atan(distY/distX);
-                Debug.Log("angulo " + angle);
+                int angle;
+                angle =(int)(Math.Atan(distY/distX)*180/Math.PI);
+                //fixing angle depending on direction
+                if(first.transform.position.x<transform.position.x && first.transform.position.y>=transform.position.y)
+                {
+                    angle*=-1;
+                    
+                }
+                else if(first.transform.position.x>=transform.position.x && first.transform.position.y>=transform.position.y)
+                {
+                    angle+=180;
+                }
+                else if(first.transform.position.x>=transform.position.x && first.transform.position.y<transform.position.y)
+                {
+                    angle+=(90-angle)*2;
+                }
+                Debug.Log("angulo: " + angle);
                 GameObject g = Instantiate(arrow, new Vector3(middleX,middleY, transform.position.z), Quaternion.identity);
                 /*
                 //find the vector pointing from our position to the target
@@ -127,7 +114,7 @@ public class Seleccion_y_Union : MonoBehaviour
                 //rotate us over time according to speed until we are in the required rotation
                 transform.rotation = Quaternion.Slerp(transform.rotation, _lookRotation, Time.deltaTime * RotationSpeed);
                 */
-                g.transform.Rotate(0, 0, -60);
+                g.transform.Rotate(0, 0, angle-90);
                 Debug.Log("Union entre"+ first+ "and"+ this.gameObject);
                 first = null;
 
