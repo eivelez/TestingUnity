@@ -76,6 +76,7 @@ public class Seleccion_y_Union : MonoBehaviour
                 }
                 //finalmente, casteo la linea
                 Debug.Log(first.transform.position);
+                float distTotal = Vector2.Distance(first.transform.position,transform.position);
                 float distX = Math.Abs(first.transform.position.x-transform.position.x);
                 float distY = Math.Abs(first.transform.position.y-transform.position.y);
                 float middleX;
@@ -115,6 +116,7 @@ public class Seleccion_y_Union : MonoBehaviour
                 transform.rotation = Quaternion.Slerp(transform.rotation, _lookRotation, Time.deltaTime * RotationSpeed);
                 */
                 g.transform.Rotate(0, 0, angle-90);
+                g.transform.localScale = new Vector3(0.3f, 0.15f*distTotal-0.3f, 1); //the minus parameter avoid the arrow to enter into the circle
                 Debug.Log("Union entre"+ first+ "and"+ this.gameObject);
                 first = null;
 
