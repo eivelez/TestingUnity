@@ -2,12 +2,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Seleccion_y_Union : MonoBehaviour
 {
+    public int points = 50;
+    public int counter = 0; //fines demostrativos
+    //public TextMeshPro textObject;
     public int total_nodes = 2;
     public int used_nodes = 0;
     public static GameObject first;
+    GameObject textObject;
     public int type;
     public CircleCollider2D collider;
     // Tipo 0 es normal, 1 es warrior, 2 es defensa, 3 es nodo extra
@@ -43,7 +48,10 @@ public class Seleccion_y_Union : MonoBehaviour
             {
                 used_nodes -= 1;
                 objectives[i] = null;
-                Destroy(unions[i].gameObject);
+                if(unions[i]!=null)
+                {
+                    Destroy(unions[i].gameObject);
+                }
                 unions[i] = null;
             }
             first = null;
@@ -165,10 +173,21 @@ public class Seleccion_y_Union : MonoBehaviour
     void Start()
     {
         CheckType();
+        textObject = gameObject.transform.GetChild(0).GetChild(0).gameObject;
+        textObject.GetComponent<TextMeshProUGUI>().text = points.ToString();
     }
 
     // Update is called once per frame
     void Update()
     {
+        //demostrative only of modifying the points
+        textObject.GetComponent<TextMeshProUGUI>().text = points.ToString();
+        counter++;
+        if(objectives[0]!=null && counter>400)
+        {
+            objectives[0].GetComponent<Seleccion_y_Union>().points--;
+            counter=0;
+        }
     }
+    
 }
