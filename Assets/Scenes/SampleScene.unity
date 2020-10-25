@@ -369,8 +369,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 618240409}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.3517985, y: 1.9294028, z: 0}
-  m_LocalScale: {x: 2.5, y: 2.5, z: 1}
+  m_LocalPosition: {x: 4.28, y: -0.13, z: 0}
+  m_LocalScale: {x: 5, y: 5, z: 1}
   m_Children:
   - {fileID: 1459022092}
   m_Father: {fileID: 0}
@@ -413,7 +413,7 @@ MonoBehaviour:
   objectives: []
   unions: []
   arrow: {fileID: 3853505329974284110, guid: 4cd409abedd33a54480896e3bf09d3aa, type: 3}
-  sprite: {fileID: 0}
+  sprite: {fileID: 618240411}
   owner: 0
 --- !u!122 &618240415
 Halo:
@@ -551,7 +551,7 @@ MonoBehaviour:
   objectives: []
   unions: []
   arrow: {fileID: 3853505329974284110, guid: 4cd409abedd33a54480896e3bf09d3aa, type: 3}
-  sprite: {fileID: 0}
+  sprite: {fileID: 1000424000}
   owner: 0
 --- !u!58 &1000424003
 CircleCollider2D:
@@ -578,7 +578,7 @@ RectTransform:
   m_GameObject: {fileID: 1000423998}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.5, y: 2.5, z: 1}
+  m_LocalScale: {x: 5, y: 5, z: 1}
   m_Children:
   - {fileID: 1655871883}
   m_Father: {fileID: 0}
@@ -586,7 +586,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -6.38, y: 3.35}
+  m_AnchoredPosition: {x: -5.74, y: 1.07}
   m_SizeDelta: {x: 1.28, y: 1.28}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1459022091

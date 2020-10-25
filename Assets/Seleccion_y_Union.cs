@@ -131,8 +131,12 @@ public class Seleccion_y_Union : MonoBehaviour
                 //rotate us over time according to speed until we are in the required rotation
                 transform.rotation = Quaternion.Slerp(transform.rotation, _lookRotation, Time.deltaTime * RotationSpeed);
                 */
+                float radio = Vector2.Distance(gameObject.transform.position,point(gameObject));
+
+                Debug.Log(gameObject.transform.position);
+                Debug.Log(point(gameObject));
                 g.transform.Rotate(0, 0, angle - 90);
-                g.transform.localScale = new Vector3(0.3f, 0.15f * distTotal - 0.3f, 1); //the minus parameter avoid the arrow to enter into the circle
+                g.transform.localScale = new Vector3(0.3f, 0.15f * (distTotal - 2.1f*radio), 1); //the minus parameter avoid the arrow to enter into the circle
                 first_code.unions[index_to_use] = g;
                 Debug.Log("Union entre" + first + "and" + this.gameObject);
                 first = null;
@@ -165,7 +169,7 @@ public class Seleccion_y_Union : MonoBehaviour
 
     Vector2 point(GameObject game)
     {
-        Vector2 vect = collider.ClosestPoint(game.transform.position);
+        Vector2 vect = collider.ClosestPoint(new Vector2(1000000,1000000));
         return vect;
     }
 
