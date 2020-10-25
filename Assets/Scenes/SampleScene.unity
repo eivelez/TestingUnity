@@ -413,6 +413,8 @@ MonoBehaviour:
   objectives: []
   unions: []
   arrow: {fileID: 3853505329974284110, guid: 4cd409abedd33a54480896e3bf09d3aa, type: 3}
+  sprite: {fileID: 0}
+  owner: 0
 --- !u!122 &618240415
 Halo:
   m_ObjectHideFlags: 0
@@ -549,6 +551,8 @@ MonoBehaviour:
   objectives: []
   unions: []
   arrow: {fileID: 3853505329974284110, guid: 4cd409abedd33a54480896e3bf09d3aa, type: 3}
+  sprite: {fileID: 0}
+  owner: 0
 --- !u!58 &1000424003
 CircleCollider2D:
   m_ObjectHideFlags: 0
