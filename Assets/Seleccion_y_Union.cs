@@ -211,9 +211,12 @@ public class Seleccion_y_Union : MonoBehaviour
             {
                 if(objectives[i]!=null)
                 {
-                    if(objectives[i].GetComponent<Seleccion_y_Union>().owner==gameObject.GetComponent<Seleccion_y_Union>().owner && objectives[i].GetComponent<Seleccion_y_Union>().points<100)
+                    if(objectives[i].GetComponent<Seleccion_y_Union>().owner==gameObject.GetComponent<Seleccion_y_Union>().owner)
                     {
-                        objectives[i].GetComponent<Seleccion_y_Union>().points++;
+                        if( objectives[i].GetComponent<Seleccion_y_Union>().points<100)
+                        {
+                            objectives[i].GetComponent<Seleccion_y_Union>().points++;
+                        }
                     }
                     else
                     {
