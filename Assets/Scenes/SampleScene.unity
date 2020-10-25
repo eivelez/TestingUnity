@@ -413,6 +413,7 @@ MonoBehaviour:
   objectives: []
   unions: []
   arrow: {fileID: 3853505329974284110, guid: 4cd409abedd33a54480896e3bf09d3aa, type: 3}
+  halo: {fileID: 618240415}
   sprite: {fileID: 618240411}
   owner: 0
 --- !u!122 &618240415
@@ -551,6 +552,7 @@ MonoBehaviour:
   objectives: []
   unions: []
   arrow: {fileID: 3853505329974284110, guid: 4cd409abedd33a54480896e3bf09d3aa, type: 3}
+  halo: {fileID: 1000424001}
   sprite: {fileID: 1000424000}
   owner: 0
 --- !u!58 &1000424003
