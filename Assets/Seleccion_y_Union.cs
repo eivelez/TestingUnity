@@ -205,10 +205,23 @@ public class Seleccion_y_Union : MonoBehaviour
         //demostrative only of modifying the points
         textObject.GetComponent<TextMeshProUGUI>().text = points.ToString();
         counter++;
-        if (objectives[0] != null && counter > 400)
+        if(counter>400)
         {
-            objectives[0].GetComponent<Seleccion_y_Union>().points--;
-            counter = 0;
+            for(int i = 0;i<total_nodes;i++)
+            {
+                if(objectives[i]!=null)
+                {
+                    if(objectives[i].GetComponent<Seleccion_y_Union>().owner==gameObject.GetComponent<Seleccion_y_Union>().owner && objectives[i].GetComponent<Seleccion_y_Union>().points<100)
+                    {
+                        objectives[i].GetComponent<Seleccion_y_Union>().points++;
+                    }
+                    else
+                    {
+                        objectives[i].GetComponent<Seleccion_y_Union>().points--;
+                    }
+                }
+            }
+            counter=0;
         }
     }
 
