@@ -23,6 +23,9 @@ public class Seleccion_y_Union : MonoBehaviour
     public int owner; // 0 if neutral, else to playerN
     public int healingFactor;
     public int dmgFactor;
+    Camera cam;
+    public float camHeight;
+    public float camWidth;
 
     void CheckType()
     {
@@ -93,7 +96,7 @@ public class Seleccion_y_Union : MonoBehaviour
                     }
                 }
                 //finalmente, casteo la linea
-                Debug.Log(first.transform.position);
+                //Debug.Log(first.transform.position);
                 float distTotal = Vector2.Distance(first.transform.position, transform.position);
                 float distX = Math.Abs(first.transform.position.x - transform.position.x);
                 float distY = Math.Abs(first.transform.position.y - transform.position.y);
@@ -125,23 +128,21 @@ public class Seleccion_y_Union : MonoBehaviour
                     angle += (90 - angle) * 2;
                 }
                 Debug.Log("angulo: " + angle);
-                GameObject g = Instantiate(arrow, new Vector3(middleX, middleY, transform.position.z), Quaternion.identity);
-                /*
-                //find the vector pointing from our position to the target
-                Vector3 _direction = (Target.position - transform.position).normalized;
-
-                //create the rotation we need to be in to look at the target
-                _lookRotation = Quaternion.LookRotation(_direction);
-
-                //rotate us over time according to speed until we are in the required rotation
-                transform.rotation = Quaternion.Slerp(transform.rotation, _lookRotation, Time.deltaTime * RotationSpeed);
-                */
-
-                g.transform.Rotate(0, 0, angle - 90);
-                g.transform.localScale = new Vector3(0.3f, 0.15f * colliderDist, 1); //the minus parameter avoid the arrow to enter into the circle
-                first_code.unions[index_to_use] = g;
-                Debug.Log("Union entre" + first + "and" + this.gameObject);
-                first = null;
+                if((int) (100f*distTotal/Camera.main.GetComponent<CameraSize>().camWidth)<=first.GetComponent<Seleccion_y_Union>().points)
+                {
+                    GameObject g = Instantiate(arrow, new Vector3(middleX, middleY, transform.position.z), Quaternion.identity);
+                    g.transform.Rotate(0, 0, angle - 90);
+                    g.transform.localScale = new Vector3(0.3f, 0.15f * colliderDist, 1); //the minus parameter avoid the arrow to enter into the circle
+                    first_code.unions[index_to_use] = g;
+                    Debug.Log("Union entre" + first + "and" + this.gameObject);
+                    first.GetComponent<Seleccion_y_Union>().points-=(int) (100f*distTotal/Camera.main.GetComponent<CameraSize>().camWidth);
+                    first = null;
+                }
+                else
+                {
+                    Debug.Log("Union entre" + first + "and" + this.gameObject +"no creada, mucha distancia.");
+                }
+                
 
 
             }
@@ -267,14 +268,18 @@ public class Seleccion_y_Union : MonoBehaviour
         CheckType();
         textObject = gameObject.transform.GetChild(0).GetChild(0).gameObject;
         textObject.GetComponent<TextMeshProUGUI>().text = points.ToString();
+        //cam = Camera.main;
+        //camHeight = 2f * cam.orthographicSize;
+        //camWidth = camHeight * cam.aspect;
+        Debug.Log(Camera.main.GetComponent<CameraSize>().camWidth);
     }
 
 
     // Update is called once per frame
     void Update()
     {
+        AttackDefenseFactorCalculator();
         ChangeColor();
         ChangeHP();
-        AttackDefenseFactorCalculator();
     }
 }
