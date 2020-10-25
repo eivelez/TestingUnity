@@ -21,6 +21,8 @@ public class Seleccion_y_Union : MonoBehaviour
     public Component halo;
     public SpriteRenderer sprite;
     public int owner; // 0 if neutral, else to playerN
+    public int healingFactor;
+    public int dmgFactor;
 
     void CheckType()
     {
@@ -213,18 +215,50 @@ public class Seleccion_y_Union : MonoBehaviour
                 {
                     if(objectives[i].GetComponent<Seleccion_y_Union>().owner==gameObject.GetComponent<Seleccion_y_Union>().owner)
                     {
-                        if( objectives[i].GetComponent<Seleccion_y_Union>().points<100)
+                        if( objectives[i].GetComponent<Seleccion_y_Union>().points+gameObject.GetComponent<Seleccion_y_Union>().healingFactor<=100)
                         {
-                            objectives[i].GetComponent<Seleccion_y_Union>().points++;
+                            objectives[i].GetComponent<Seleccion_y_Union>().points+=gameObject.GetComponent<Seleccion_y_Union>().healingFactor;
+                        }
+                        else
+                        {
+                            objectives[i].GetComponent<Seleccion_y_Union>().points=100;
                         }
                     }
                     else
                     {
-                        objectives[i].GetComponent<Seleccion_y_Union>().points--;
+                        if(objectives[i].GetComponent<Seleccion_y_Union>().points-gameObject.GetComponent<Seleccion_y_Union>().dmgFactor<=0)
+                        {
+                            objectives[i].GetComponent<Seleccion_y_Union>().points+=gameObject.GetComponent<Seleccion_y_Union>().dmgFactor-objectives[i].GetComponent<Seleccion_y_Union>().points;
+                            objectives[i].GetComponent<Seleccion_y_Union>().owner=gameObject.GetComponent<Seleccion_y_Union>().owner;
+                        }
+                        else
+                        {
+                            objectives[i].GetComponent<Seleccion_y_Union>().points-=gameObject.GetComponent<Seleccion_y_Union>().dmgFactor;
+                        }
                     }
                 }
             }
             counter=0;
+        }
+    }
+
+
+    void AttackDefenseFactorCalculator()
+    {
+        if(gameObject.GetComponent<Seleccion_y_Union>().type==1)
+        {
+            gameObject.GetComponent<Seleccion_y_Union>().dmgFactor=(int) Mathf.Sqrt(points)*2;
+            gameObject.GetComponent<Seleccion_y_Union>().healingFactor=(int) Mathf.Sqrt(points);
+        }
+        else if(gameObject.GetComponent<Seleccion_y_Union>().type==2)
+        {
+            gameObject.GetComponent<Seleccion_y_Union>().dmgFactor=(int)Mathf.Sqrt(points);
+            gameObject.GetComponent<Seleccion_y_Union>().healingFactor=(int)Mathf.Sqrt(points)*2;
+        }
+        else
+        {
+            gameObject.GetComponent<Seleccion_y_Union>().dmgFactor=(int)Mathf.Sqrt(points);
+            gameObject.GetComponent<Seleccion_y_Union>().healingFactor=(int)Mathf.Sqrt(points);
         }
     }
 
@@ -235,10 +269,12 @@ public class Seleccion_y_Union : MonoBehaviour
         textObject.GetComponent<TextMeshProUGUI>().text = points.ToString();
     }
 
+
     // Update is called once per frame
     void Update()
     {
         ChangeColor();
         ChangeHP();
+        AttackDefenseFactorCalculator();
     }
 }
