@@ -23,9 +23,6 @@ public class Seleccion_y_Union : MonoBehaviour
     public int owner; // 0 if neutral, else to playerN
     public int healingFactor;
     public int dmgFactor;
-    Camera cam;
-    public float camHeight;
-    public float camWidth;
 
     void CheckType()
     {
@@ -54,11 +51,15 @@ public class Seleccion_y_Union : MonoBehaviour
             Debug.Log("Todos los nodos eliminados" + this.gameObject);
             for (int i = 0; i < total_nodes; i++)
             {
-                used_nodes -= 1;
+                if(objectives[i]!=null)
+                {
+                    points += (int) (100f * Vector2.Distance(transform.position,objectives[i].transform.position) / Camera.main.GetComponent<CameraSize>().camWidth) ;
+                }
                 objectives[i] = null;
                 try { Destroy(unions[i].gameObject); } catch { }
                 unions[i] = null;
             }
+            used_nodes=0;
             first = null;
         }
         else if (first != this.transform.gameObject)
@@ -74,6 +75,8 @@ public class Seleccion_y_Union : MonoBehaviour
                     {
                         //ya existe, elimino la flecha y libero el cupo
                         first_code.used_nodes -= 1;
+                        int pointsToAdd = (int) (100f * Vector2.Distance(gameObject.transform.position,first_code.transform.position) / Camera.main.GetComponent<CameraSize>().camWidth) ;
+                        first_code.points += pointsToAdd;
                         first_code.objectives[i] = null;
                         Destroy(first_code.unions[i].gameObject);
                         first_code.unions[i] = null;
@@ -140,7 +143,11 @@ public class Seleccion_y_Union : MonoBehaviour
                 }
                 else
                 {
+                    //no se completo la union por distancia, por lo tanto se libera el nodo
                     Debug.Log("Union entre" + first + "and" + this.gameObject +"no creada, mucha distancia.");
+                    first_code.objectives[index_to_use]=null;
+                    first_code.used_nodes -= 1;
+                    first=null;
                 }
                 
 
@@ -268,10 +275,6 @@ public class Seleccion_y_Union : MonoBehaviour
         CheckType();
         textObject = gameObject.transform.GetChild(0).GetChild(0).gameObject;
         textObject.GetComponent<TextMeshProUGUI>().text = points.ToString();
-        //cam = Camera.main;
-        //camHeight = 2f * cam.orthographicSize;
-        //camWidth = camHeight * cam.aspect;
-        Debug.Log(Camera.main.GetComponent<CameraSize>().camWidth);
     }
 
 
