@@ -38,6 +38,14 @@ public class Seleccion_y_Union : MonoBehaviour
         else if (first == this.transform.gameObject)
         {
             Debug.Log("Ya no hay first" + this.gameObject);
+            Debug.Log("Todos los nodos eliminados" + this.gameObject);
+            for (int i = 0; i < total_nodes; i++)
+            {
+                used_nodes -= 1;
+                objectives[i] = null;
+                Destroy(unions[i].gameObject);
+                unions[i] = null;
+            }
             first = null;
         }
         else if (first != this.transform.gameObject)
@@ -54,9 +62,10 @@ public class Seleccion_y_Union : MonoBehaviour
                         //ya existe, elimino la flecha y libero el cupo
                         first_code.used_nodes -= 1;
                         first_code.objectives[i] = null;
-                        Destroy(first_code.unions[i]);
+                        Destroy(first_code.unions[i].gameObject);
                         first_code.unions[i] = null;
                         Debug.Log("nodo sacado" + this.gameObject);
+                        first=null;
                         return;
                     }
                 }
@@ -117,13 +126,32 @@ public class Seleccion_y_Union : MonoBehaviour
                 */
                 g.transform.Rotate(0, 0, angle-90);
                 g.transform.localScale = new Vector3(0.3f, 0.15f*distTotal-0.3f, 1); //the minus parameter avoid the arrow to enter into the circle
+                first_code.unions[index_to_use]=g;
                 Debug.Log("Union entre"+ first+ "and"+ this.gameObject);
                 first = null;
+
 
             }
             else
             {
-                Debug.Log("This node can´t have more nodes");
+                for (int i = 0; i < first_code.total_nodes; i++)
+                {
+                    if (first_code.objectives[i] == this.gameObject)
+                    {
+                        //ya existe, elimino la flecha y libero el cupo
+                        first_code.used_nodes -= 1;
+                        first_code.objectives[i] = null;
+                        Destroy(first_code.unions[i].gameObject);
+                        first_code.unions[i] = null;
+                        Debug.Log("nodo sacado" + this.gameObject);
+                        first=null;
+                        return;
+                    }
+                    else
+                    {
+                        Debug.Log("This node can´t have more nodes");
+                    }
+                }
             }
         }
     }
