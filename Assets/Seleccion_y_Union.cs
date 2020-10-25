@@ -97,6 +97,9 @@ public class Seleccion_y_Union : MonoBehaviour
                 float distY = Math.Abs(first.transform.position.y - transform.position.y);
                 float middleX;
                 float middleY;
+                Vector2 colliderClosest1 = collider.ClosestPoint(first.transform.position);
+                Vector2 colliderClosest2 = first.GetComponent<CircleCollider2D>().ClosestPoint(transform.position);
+                float colliderDist = Vector2.Distance(colliderClosest1,colliderClosest2);
                 //calculos de puntos medios
                 #region
                 middleX = (first.transform.position.x + transform.position.x) / 2f;
@@ -131,12 +134,9 @@ public class Seleccion_y_Union : MonoBehaviour
                 //rotate us over time according to speed until we are in the required rotation
                 transform.rotation = Quaternion.Slerp(transform.rotation, _lookRotation, Time.deltaTime * RotationSpeed);
                 */
-                float radio = Vector2.Distance(gameObject.transform.position,point(gameObject));
 
-                Debug.Log(gameObject.transform.position);
-                Debug.Log(point(gameObject));
                 g.transform.Rotate(0, 0, angle - 90);
-                g.transform.localScale = new Vector3(0.3f, 0.15f * (distTotal - 2.1f*radio), 1); //the minus parameter avoid the arrow to enter into the circle
+                g.transform.localScale = new Vector3(0.3f, 0.15f * colliderDist, 1); //the minus parameter avoid the arrow to enter into the circle
                 first_code.unions[index_to_use] = g;
                 Debug.Log("Union entre" + first + "and" + this.gameObject);
                 first = null;
@@ -166,13 +166,6 @@ public class Seleccion_y_Union : MonoBehaviour
             }
         }
     }
-
-    Vector2 point(GameObject game)
-    {
-        Vector2 vect = collider.ClosestPoint(new Vector2(1000000,1000000));
-        return vect;
-    }
-
     void ChangeColor()
     {
         if (owner == 0)
