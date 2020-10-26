@@ -23,6 +23,7 @@ public class Seleccion_y_Union : MonoBehaviour
     public int owner; // 0 if neutral, else to playerN
     public int healingFactor;
     public int dmgFactor;
+    public GameObject turnController;
 
     void CheckType()
     {
@@ -42,8 +43,11 @@ public class Seleccion_y_Union : MonoBehaviour
     {
         if (!first)
         {
-            Debug.Log("Seleccionado" + this.gameObject);
-            first = this.transform.gameObject;
+            if(turnController.GetComponent<TurnControllerScript>().player_turn==owner)
+            {
+                Debug.Log("Seleccionado" + this.gameObject);
+                first = this.transform.gameObject;
+            }
         }
         else if (first == this.transform.gameObject)
         {
